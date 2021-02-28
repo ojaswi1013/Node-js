@@ -1,3 +1,4 @@
+//objects are refernece type, hence values in them are changable
 //creating object
 const Person = {
     name: 'Max',
@@ -11,3 +12,17 @@ const Person = {
 }
 //console.log(Person);
 Person.greet();
+
+//using spread operator to copy person
+const copiedPerson = {...Person};
+console.log(copiedPerson);
+
+//different ways to extract values from an object
+//also called Object Destructuring
+const printName = ({name}) => {
+    console.log(name);
+}
+printName(Person);
+
+const {name,age} = Person;//const or let depending on the requirement
+console.log(name,age);
