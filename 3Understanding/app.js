@@ -1,16 +1,16 @@
 const http = require('http');
 const fs = require('fs');
-const { Buffer } = require('buffer');
+//const { Buffer } = require('buffer');
 
 const server = http.createServer((req, res) => {
     //console.log(req);
     const url = req.url;
     const method = req.method;
     if(url === '/') {
-        res.setHeader('Content-Type' , 'text/html' );
+        //res.setHeader('Content-Type' , 'text/html' );
         res.write('<HTML>');
         res.write('<HEAD><TITLE>ENTER MESSAGE</TITLE></HEAD>');
-        res.write('<BODY><form action="/message" method="POST"><input type="text"><button type="submit">SEND</button></form></BODY>');
+        res.write('<BODY><form action="/message" method="POST"><input type="text" name="message"><button type="submit">SEND</button></form></BODY>');
         res.write('</HTML>');
         return res.end();    
     }
@@ -23,6 +23,7 @@ const server = http.createServer((req, res) => {
         req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
             const message = parsedBody.split('=')[1];
+            console.log(message);
             fs.writeFileSync('message.txt', message);
         });
         res.statusCode = 302;
