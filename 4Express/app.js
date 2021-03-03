@@ -7,6 +7,8 @@ const app = express();
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+//can use rootdir or path
+//totally upto us
 
 app.use(bodyParser.urlencoded({extended: false}));
 
