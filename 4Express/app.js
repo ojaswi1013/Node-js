@@ -1,4 +1,7 @@
 const path = require('path');
+//const rootDir = require('./util/path');
+//can use either rootdir or path
+//totally upto us
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -11,8 +14,9 @@ const shopRoutes = require('./routes/shop');
 //totally upto us
 
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(adminRoutes);
+app.use('/admin',adminRoutes);
 app.use(shopRoutes);
 
 app.use((req,res,next) => {
