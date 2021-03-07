@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.set('view engine' , 'pug');
-//app.set('view' , 'view');  //use if the folder name is not views
+app.set('views' , 'views');  //use if the folder name is not views
 //which is not the case right now
 
 const adminData = require('./routes/admin');
