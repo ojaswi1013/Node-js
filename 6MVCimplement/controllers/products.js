@@ -17,8 +17,6 @@ exports.postAddProduct = (req, res, next) => {
 }
 
 exports.getProduct = (req, res, next) => {
-    //const products = adminData.products;  we have products array here already
-    //so we dont need to extract it from anywhere
     res.render('shop', {
       prods: products,
       pageTitle: 'Shop',
