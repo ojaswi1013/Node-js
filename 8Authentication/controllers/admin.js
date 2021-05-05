@@ -37,12 +37,30 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  req.user
+  if(req.user.id == 1) {                    //ADDING ADMIN FUNCTIONALITIES
+    return Product.findByPk(prodId)
+    .then(product => {
+      if(!product) {
+        ///**/console.log(product+' here ');
+        return res.redirect('/');
+      }
+      res.render('admin/edit-product', {
+        pageTitle: 'Edit Product',
+        path: '/admin/edit-product',
+        editing: editMode,
+        product: product,
+        isAuthenticated: req.session.isLoggedIn
+      });
+    });
+  }
+  else {
+    req.user
     .getProducts({ where: { id: prodId } })
-    // Product.findById(prodId)
+    //Product.findByPk(prodId)
     .then(products => {
       const product = products[0];
       if (!product) {
+        ///**/console.log(product);
         return res.redirect('/');
       }
       res.render('admin/edit-product', {
@@ -54,6 +72,7 @@ exports.getEditProduct = (req, res, next) => {
       });
     })
     .catch(err => console.log(err));
+  }
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -78,6 +97,21 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
+  if(req.user.id == 1) {                    // ADDING ADMIN FUNCTIONALITIES
+    Product.findAll()
+    .then(products => {
+      res.render('admin/products', {
+        prods: products,
+        pageTitle: 'Admin Products',
+        path: '/admin/products',
+        isAuthenticated: req.session.isLoggedIn
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+  else {
   req.user
     .getProducts()
     .then(products => {
@@ -89,6 +123,7 @@ exports.getProducts = (req, res, next) => {
       });
     })
     .catch(err => console.log(err));
+  }
 };
 
 exports.postDeleteProduct = (req, res, next) => {
